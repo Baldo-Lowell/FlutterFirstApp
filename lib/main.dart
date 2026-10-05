@@ -1,61 +1,26 @@
-import 'package:flutter/material.dart'; //UI Library
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:myapp/firebase_options.dart';
+import 'firebase_options.dart';
+import 'form_page.dart';
 
 
-void main() => runApp(MyApp());//App Entry point
+void main() async {
+WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {//A widget w/ nochanges of data or  display 
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    home: FirstScreen()
-    ); //MaterialApp
-   }
-}
-class FirstScreen extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {// describe what to show
-    return Scaffold(
-      appBar: AppBar(title: Text('My First App'),),
-      body:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            Icon(Icons.star, size:40),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(Icons.thumb_down),
-                Icon(Icons.thumb_up),
-              ],
-            ),
-            SizedBox(height: 10),
-            Text('Hello Flutter'),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SecondScreen()),
-                );
-              },
-              child: Text('Go to Second Screen')
-            ),//Elevated Button
-          ],
-        ),
-        ),
-    );
-  }
+await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+runApp(const MyApp());
 }
 
-class SecondScreen extends StatelessWidget {
+class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Second Screen')),
-      body: Center(child: ElevatedButton(
-        onPressed: () => Navigator.pop(context), child: Text('Go back')), 
-      ),
-      );
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FormPage(),
+    );
   }
 }
